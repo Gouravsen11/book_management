@@ -5,17 +5,15 @@
 <table class="table">
   <thead>
     <tr>
-      <th colspan="4"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @authors.each do |author| %>
       <tr>
+        <td><%= author.id %>
         <td><%= author.name %>
-        <td><%= link_to 'Show', author %></td>
-        <td><%= link_to 'Edit', edit_author_path(author) %></td>
-        <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,5 +23,3 @@
 <br>
 <%= paginate @authors %>
 <br>
-
-<%= link_to 'New Author', new_author_path, class: "btn btn-primary" %>

@@ -1,18 +1,15 @@
 class Book < ApplicationRecord
   #Association
-  has_and_belongs_to_many :authors
+
+  has_many :authors_books, dependent: :destroy, class_name: "AuthorsBooks"
+  has_many :authors, through: :authors_books
 
   validates_presence_of :name
 
-  def update_books(book, authors, book_params)
-    @book = book
-    @book.authors.destroy_all
-    @book.name = book_params[:name]
-    @book.edition = book_params[:edition]
-    @book.publication_year = book_params[:publication_year]
-    authors.each do |author|
-      @book.authors << author
+  def update_authors(authors_ids)
+    existing_author_ids = authors.ids
+    (authors_ids - existing_author_ids).each do |u|
+      authors_books.find_or_create_by(author_id: u)
     end
-    @book
   end
 end
